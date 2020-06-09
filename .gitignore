@@ -4,3 +4,8 @@ venv/
 .vscode/
 /env
 /.vs
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/YouTube-Download.iml
+.idea/inspectionProfiles/profiles_settings.xml
