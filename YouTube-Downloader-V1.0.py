@@ -14,7 +14,7 @@ class MainWindow(qtw.QWidget):
         super().__init__()
         # Main UI code
         self.setWindowTitle("YouTube Downloader - By Taysser")
-        self.resize(1000,250)
+        self.resize(1000,350)
 
         self.url = qtw.QLineEdit()
         download_button = qtw.QPushButton("Download", self)
