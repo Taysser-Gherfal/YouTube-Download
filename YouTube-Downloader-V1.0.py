@@ -77,7 +77,7 @@ class MainWindow(qtw.QWidget):
                 ydl_opts = {}
                 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                     meta = ydl.extract_info(str(self.url.text()), download=False)
-                self.lcd2.display(int(meta['duration'])/60)
+                self.lcd2.display(round(int(meta['duration'])/60, 2))
                 self.text.setText("Title:" + meta['title'] + "\n\n" + "Description: " + meta['description'])
                 self.lable.setText("youtube_dl")
 
@@ -122,13 +122,15 @@ class MainWindow(qtw.QWidget):
 
             size = round(int(d['total_bytes']) / 1000000, 2)
             self.lcd1.display(size)
-            self.lcd2.display(d['eta'])
             self.text.setText(d['filename'])
+            self.status.emit(float(p))
 
     def youtube2(self, file):
-        ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': file + '/' + '%(title)s'}
+        ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': file + '/' + '%(title)s', 'format': 'best',}
         with youtube_dl.YoutubeDL(ydl_opts) as ydl:
             ydl.download([str(self.url.text())])
+        #'format': 'bestaudio/best',
+        #'noplaylist' : True,
         
 
 
