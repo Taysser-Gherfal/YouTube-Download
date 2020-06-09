@@ -73,10 +73,18 @@ class MainWindow(qtw.QWidget):
             self.text.setText("Title: " + title + "\n\n" + "Description: " + description)
             self.lable.setText("pytube")
         except:
-            self.lable.setText("Error!")
-            self.lcd1.display(0)
-            self.lcd2.display(0)
-            self.text.setText("Wasn't able to preview data from this URL. You should still be able to download your video(s)")
+            try:
+                with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                    meta = ydl.extract_info(str(self.url.text()), download=False)
+                
+                self.lable.setText("Testing!")
+                self.text.setText(meta['title'])
+
+            except:
+                self.lable.setText("Error!")
+                self.lcd1.display(0)
+                self.lcd2.display(0)
+                self.text.setText("Wasn't able to preview data from this URL. You should still be able to download your video(s)")
 
     def setProgress(self, val):
         self.progress.setValue(val)
