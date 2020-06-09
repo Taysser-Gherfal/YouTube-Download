@@ -74,11 +74,12 @@ class MainWindow(qtw.QWidget):
             self.lable.setText("pytube")
         except:
             try:
+                ydl_opts = {}
                 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                     meta = ydl.extract_info(str(self.url.text()), download=False)
-                
-                self.lable.setText("Testing!")
-                self.text.setText(meta['title'])
+                self.lcd2.display(int(meta['duration'])/60)
+                self.text.setText("Title:" + meta['title'] + "\n\n" + "Description: " + meta['description'])
+                self.lable.setText("youtube_dl")
 
             except:
                 self.lable.setText("Error!")
@@ -123,7 +124,6 @@ class MainWindow(qtw.QWidget):
             self.lcd1.display(size)
             self.lcd2.display(d['eta'])
             self.text.setText(d['filename'])
-            self.status.emit(float(p))
 
     def youtube2(self, file):
         ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': file + '/' + '%(title)s'}
