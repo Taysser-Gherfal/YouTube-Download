@@ -9,3 +9,14 @@ venv/
 .idea/vcs.xml
 .idea/YouTube-Download.iml
 .idea/inspectionProfiles/profiles_settings.xml
+build/YouTube-Downloader-V1.0/Analysis-00.toc
+build/YouTube-Downloader-V1.0/base_library.zip
+build/YouTube-Downloader-V1.0/EXE-00.toc
+build/YouTube-Downloader-V1.0/PKG-00.pkg
+build/YouTube-Downloader-V1.0/PKG-00.toc
+build/YouTube-Downloader-V1.0/PYZ-00.pyz
+build/YouTube-Downloader-V1.0/PYZ-00.toc
+build/YouTube-Downloader-V1.0/warn-YouTube-Downloader-V1.0.txt
+build/YouTube-Downloader-V1.0/xref-YouTube-Downloader-V1.0.html
+build/YouTube-Downloader-V1.0/localpycos/struct.pyo
+YouTube-Downloader-V1.0.spec
