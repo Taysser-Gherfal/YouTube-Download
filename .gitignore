@@ -20,3 +20,7 @@ build/YouTube-Downloader-V1.0/warn-YouTube-Downloader-V1.0.txt
 build/YouTube-Downloader-V1.0/xref-YouTube-Downloader-V1.0.html
 build/YouTube-Downloader-V1.0/localpycos/struct.pyo
 YouTube-Downloader-V1.0.spec
+
+build/
+
+dist/
