@@ -1,11 +1,5 @@
-import sys
-import os
-from PyQt5 import QtWidgets as qtw
-from PyQt5 import QtGui as qtg
-from PyQt5 import QtCore as qtc
-
-from View import *
 from Model import *
+from View import *
 
 
 class MainWindow(qtw.QMainWindow):
@@ -20,7 +14,7 @@ class MainWindow(qtw.QMainWindow):
         # Main UI code goes here
 
         self.setWindowTitle("YouTube Downloader V1.2 - By Taysser")
-        self.resize(1000,450)
+        self.resize(1000, 450)
 
         self.view = View()
         self.setCentralWidget(self.view)
@@ -35,6 +29,7 @@ class MainWindow(qtw.QMainWindow):
 
         # End main UI code
         self.show()
+
 
 if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
