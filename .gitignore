@@ -24,3 +24,4 @@ YouTube-Downloader-V1.0.spec
 build/
 
 dist/
+/.idea/workspace.xml
