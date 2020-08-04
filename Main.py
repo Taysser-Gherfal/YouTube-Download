@@ -20,12 +20,15 @@ class MainWindow(qtw.QMainWindow):
         self.setCentralWidget(self.view)
 
         self.model = Model()
+        self.download_thread = qtc.QThread()
+        self.model.moveToThread(self.download_thread)
+        self.model.previewing.connect(self.view.show_preview)
+        self.model.status.connect(self.view.show_status)
+        self.download_thread.start()
 
         self.view.pasted.connect(self.model.preview)
-        self.model.previewing.connect(self.view.show_preview)
-
         self.view.submitted.connect(self.model.download)
-        self.model.status.connect(self.view.show_status)
+        
 
         # End main UI code
         self.show()
