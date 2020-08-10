@@ -64,6 +64,11 @@ class Model(qtc.QObject):
             self.status.emit(float(p))
 
     def download(self, url, folder, library):
+        # removing attached list if found
+        result = url.find("&list=")
+        if result != -1:
+            url = url[:result]
+
         if library == "pytube":
             self.size = YouTube(url).streams[0].filesize
             YouTube(url, on_progress_callback=self.setProgressVal).streams[0].download(folder)

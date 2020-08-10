@@ -28,7 +28,6 @@ class MainWindow(qtw.QMainWindow):
 
         self.view.pasted.connect(self.model.preview)
         self.view.submitted.connect(self.model.download)
-        
 
         # End main UI code
         self.show()
