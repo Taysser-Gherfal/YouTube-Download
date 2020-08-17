@@ -27,3 +27,5 @@ dist/
 /.idea/workspace.xml
 __pycache__/Model.cpython-38.pyc
 __pycache__/Model.cpython-38.pyc
+/__pycache__/View.cpython-37.pyc
+/__pycache__/Model.cpython-37.pyc
