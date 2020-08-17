@@ -17,12 +17,18 @@ class Model(qtc.QObject):
         try:
             youtube = YouTube(str(e))
             stream = youtube.streams[0]
+            items = []
+            for i in youtube.streams:
+                #print("Type: " + str(i.type) + " - " + "Size: " + str(i.filesize))
+                items.append("Type:" + str(i.type) + " - " + "Size:" + str(i.filesize))
+
             video_data = {
-                "size" : round(int(stream.filesize) / 1000000, 2),
-                "title" : stream.title,
-                "length" : round(int(youtube.length) /60, 2),
-                "description" : youtube.description,
-                "status" : "pytube"
+                "size": round(int(stream.filesize) / 1000000, 2),
+                "title": stream.title,
+                "length": round(int(youtube.length) /60, 2),
+                "description": youtube.description,
+                "items": items,
+                "status": "pytube"
             }
 
         except:
@@ -31,11 +37,12 @@ class Model(qtc.QObject):
                 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                     meta = ydl.extract_info(str(e), download=False)
                     video_data = {
-                    "size" : 0,
-                    "title" : meta['title'],
-                    "length" : round(int(meta['duration'])/60, 2),
-                    "description" : meta['description'],
-                    "status" : "youtube_dl"
+                        "size": 0,
+                        "title": meta['title'],
+                        "length": round(int(meta['duration'])/60, 2),
+                        "description": meta['description'],
+                        "items": ["Not supported for this video!"],
+                        "status": "youtube_dl"
                     }
 
             except:
@@ -63,15 +70,16 @@ class Model(qtc.QObject):
             size = round(int(d['total_bytes']) / 1000000, 2)
             self.status.emit(float(p))
 
-    def download(self, url, folder, library):
+    def download(self, url, folder, library, selected=0):
         # removing attached list if found
+        print(selected)
         result = url.find("&list=")
         if result != -1:
             url = url[:result]
 
         if library == "pytube":
-            self.size = YouTube(url).streams[0].filesize
-            YouTube(url, on_progress_callback=self.setProgressVal).streams[0].download(folder)
+            self.size = YouTube(url).streams[selected].filesize
+            YouTube(url, on_progress_callback=self.setProgressVal).streams[selected].download(folder)
             
         elif library == "youtube_dl":
             ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': 'best',}
