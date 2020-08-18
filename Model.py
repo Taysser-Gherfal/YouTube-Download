@@ -14,10 +14,10 @@ class Model(qtc.QObject):
 
     def preview(self, e):
 
+        items = []
         try:
             youtube = YouTube(str(e))
             stream = youtube.streams[0]
-            items = []
             for i in youtube.streams:
                 #print("Type: " + str(i.type) + " - " + "Size: " + str(i.filesize))
                 items.append("Type:" + str(i.type) + " - " + "Size:" + str(i.filesize))
@@ -36,12 +36,16 @@ class Model(qtc.QObject):
                 ydl_opts = {}
                 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                     meta = ydl.extract_info(str(e), download=False)
+                    
+                    for i in meta['formats']:
+                        items.append(i['ext'] + "-" + i['format_note'] + "-" + str(i['filesize']) + "-" + i['format_id'])
+
                     video_data = {
                         "size": 0,
                         "title": meta['title'],
                         "length": round(int(meta['duration'])/60, 2),
                         "description": meta['description'],
-                        "items": ["Not supported for this video!"],
+                        "items": items,
                         "status": "youtube_dl"
                     }
 
@@ -51,6 +55,7 @@ class Model(qtc.QObject):
                 "title" : "Error!",
                 "length" : 0,
                 "description" : "Wasn't able to preview data from this URL.",
+                "items": ["Not supported for this video!"],
                 "status" : "Error!"
                 }
         
