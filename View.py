@@ -90,4 +90,5 @@ class View(qtw.QWidget):
         self.lcd2.display(video_data["length"])
         self.text.setText("Title: " + video_data["title"] + "\n\n" + "Description: " + video_data["description"])
         self.lable.setText(video_data["status"])
+        self.combo_box.clear()
         self.combo_box.addItems(video_data["items"])

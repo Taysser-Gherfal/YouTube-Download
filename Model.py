@@ -11,23 +11,23 @@ class Model(qtc.QObject):
 
     previewing = qtc.pyqtSignal(dict)
     status = qtc.pyqtSignal(float)
+    items = []
 
     def preview(self, e):
-
-        items = []
+        self.items.clear()
         try:
             youtube = YouTube(str(e))
             stream = youtube.streams[0]
             for i in youtube.streams:
                 #print("Type: " + str(i.type) + " - " + "Size: " + str(i.filesize))
-                items.append("Type:" + str(i.type) + " - " + "Size:" + str(i.filesize))
+                self.items.append("Type:" + str(i.type) + " - " + "Size:" + str(i.filesize))
 
             video_data = {
                 "size": round(int(stream.filesize) / 1000000, 2),
                 "title": stream.title,
                 "length": round(int(youtube.length) /60, 2),
                 "description": youtube.description,
-                "items": items,
+                "items": self.items,
                 "status": "pytube"
             }
 
@@ -38,14 +38,14 @@ class Model(qtc.QObject):
                     meta = ydl.extract_info(str(e), download=False)
                     
                     for i in meta['formats']:
-                        items.append(i['ext'] + "-" + i['format_note'] + "-" + str(i['filesize']) + "-" + i['format_id'])
+                        self.items.append(i['format_note'] + " - " + i['ext'] + " - " + str("{:,}".format(i['filesize'])) + " / " + i['format_id'])
 
                     video_data = {
                         "size": 0,
                         "title": meta['title'],
                         "length": round(int(meta['duration'])/60, 2),
                         "description": meta['description'],
-                        "items": items,
+                        "items": self.items,
                         "status": "youtube_dl"
                     }
 
@@ -77,7 +77,6 @@ class Model(qtc.QObject):
 
     def download(self, url, folder, library, selected=0):
         # removing attached list if found
-        print(selected)
         result = url.find("&list=")
         if result != -1:
             url = url[:result]
@@ -87,6 +86,11 @@ class Model(qtc.QObject):
             YouTube(url, on_progress_callback=self.setProgressVal).streams[selected].download(folder)
             
         elif library == "youtube_dl":
-            ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': 'best',}
+            select = self.items[selected]
+            left, right = select.split('/')
+            print(right.lstrip())
+            
+            ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': right.lstrip(),}
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
+            

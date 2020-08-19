@@ -13,7 +13,7 @@ class MainWindow(qtw.QMainWindow):
         super().__init__()
         # Main UI code goes here
 
-        self.setWindowTitle("YouTube Downloader V1.3 - By Taysser")
+        self.setWindowTitle("YouTube Downloader V1.4 - By Taysser")
         self.resize(1000, 450)
 
         self.view = View()
