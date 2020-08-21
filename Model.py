@@ -18,9 +18,11 @@ class Model(qtc.QObject):
         try:
             youtube = YouTube(str(e))
             stream = youtube.streams[0]
-            for i in youtube.streams:
-                #print("Type: " + str(i.type) + " - " + "Size: " + str(i.filesize))
-                self.items.append("Type:" + str(i.type) + " - " + "Size:" + str(i.filesize))
+            for i in youtube.streams.filter(progressive=True).all():
+                self.items.append("Type: Video & Audio" + " - " + "Size: " + str(round(int(i.filesize) / 1000000, 2)) + "MB")
+
+            for i in youtube.streams.filter(adaptive=True).all():
+                self.items.append("Type: " + str(i.type) + " only" + " - " + "Size: " + str(round(int(i.filesize) / 1000000, 2)) + "MB")
 
             video_data = {
                 "size": round(int(stream.filesize) / 1000000, 2),
@@ -38,7 +40,8 @@ class Model(qtc.QObject):
                     meta = ydl.extract_info(str(e), download=False)
                     
                     for i in meta['formats']:
-                        self.items.append(i['format_note'] + " - " + i['ext'] + " - " + str("{:,}".format(i['filesize'])) + " / " + i['format_id'])
+                        print(i)
+                        self.items.append(i['acodec'] + " - " + i['format'] + " - " + i['ext'] + " - " + str("{:,}".format(i['filesize'])) + " / " + i['format_id'])
 
                     video_data = {
                         "size": 0,
@@ -91,6 +94,7 @@ class Model(qtc.QObject):
             print(right.lstrip())
             
             ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': right.lstrip(),}
+            #ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': 'worst',}
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
             
