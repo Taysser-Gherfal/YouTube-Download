@@ -25,10 +25,8 @@ class View(qtw.QWidget):
         self.combo_box = qtw.QComboBox()
 
         self.lable = qtw.QLabel()
-        self.size_lable = qtw.QLabel()
         self.time_lable = qtw.QLabel()
         self.progress = qtw.QProgressBar()
-        self.lcd1 = qtw.QLCDNumber()
         self.lcd2 = qtw.QLCDNumber()
         self.text = qtw.QTextBrowser()
 
@@ -38,28 +36,28 @@ class View(qtw.QWidget):
 
         # Right col layout
         right_layout = qtw.QVBoxLayout()
-        layout.addLayout(right_layout, 3, 1)
+        layout.addLayout(right_layout, 2, 1)
         
         # Adding widgets to the main UI
         layout.addWidget(self.url, 0, 0)
         layout.addWidget(download_button, 4, 1)
-        layout.addWidget(self.folder, 1, 0)
-        layout.addWidget(folder_button, 1, 1)
-        layout.addWidget(self.combo_box, 2, 0)
-        layout.addWidget(self.text, 3, 0)
+        layout.addWidget(self.folder, 3, 0)
+        layout.addWidget(folder_button, 3, 1)
+        layout.addWidget(self.combo_box, 1, 0)
+        layout.addWidget(self.text, 2, 0)
         layout.addWidget(self.lable, 0, 1)
         layout.addWidget(self.progress, 4, 0)
 
         # Adding widgets to the right col
-        right_layout.addWidget(self.size_lable)
-        right_layout.addWidget(self.lcd1)
-        right_layout.addWidget(self.time_lable)
         right_layout.addWidget(self.lcd2)
+        right_layout.addWidget(self.time_lable)
+        self.lcd2.setMaximumHeight(50)
+        self.time_lable.setAlignment(qtc.Qt.AlignTop)
+        self.time_lable.setAlignment(qtc.Qt.AlignRight)
 
         # Setting lable text
         self.lable.setText("Status...")
-        self.size_lable.setText("Size (MB):")
-        self.time_lable.setText("Time (Mins):")
+        self.time_lable.setText("minutes")
 
         # Connecting the download button and the URL change
         download_button.clicked.connect(self.download)
@@ -86,7 +84,6 @@ class View(qtw.QWidget):
     
     def show_preview(self, video_data):
         self.progress.reset()
-        self.lcd1.display(video_data["size"])
         self.lcd2.display(video_data["length"])
         self.text.setText("Title: " + video_data["title"] + "\n\n" + "Description: " + video_data["description"])
         self.lable.setText(video_data["status"])
