@@ -25,7 +25,6 @@ class Model(qtc.QObject):
                 self.items.append("Type: " + str(i.type) + " only" + " - " + "Size: " + str(round(int(i.filesize) / 1000000, 2)) + "MB")
 
             video_data = {
-                "size": round(int(stream.filesize) / 1000000, 2),
                 "title": stream.title,
                 "length": round(int(youtube.length) /60, 2),
                 "description": youtube.description,
@@ -40,11 +39,9 @@ class Model(qtc.QObject):
                     meta = ydl.extract_info(str(e), download=False)
                     
                     for i in meta['formats']:
-                        print(i)
-                        self.items.append(i['acodec'] + " - " + i['format'] + " - " + i['ext'] + " - " + str("{:,}".format(i['filesize'])) + " / " + i['format_id'])
+                        self.items.append("Type: " + i['acodec'] + " - " + i['format'] + " - " + i['ext'] + " - " + "Size: " + str(round(int(i['filesize']) / 1000000, 2)) + "MB" + " / " + i['format_id'])
 
                     video_data = {
-                        "size": 0,
                         "title": meta['title'],
                         "length": round(int(meta['duration'])/60, 2),
                         "description": meta['description'],
@@ -54,7 +51,6 @@ class Model(qtc.QObject):
 
             except:
                 video_data = {
-                "size" : 0,
                 "title" : "Error!",
                 "length" : 0,
                 "description" : "Wasn't able to preview data from this URL.",
@@ -91,7 +87,6 @@ class Model(qtc.QObject):
         elif library == "youtube_dl":
             select = self.items[selected]
             left, right = select.split('/')
-            print(right.lstrip())
             
             ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': right.lstrip(),}
             #ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': 'worst',}
