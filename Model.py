@@ -88,7 +88,7 @@ class Model(qtc.QObject):
             select = self.items[selected]
             left, right = select.split('/')
             
-            ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': right.lstrip(),}
+            ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s.%(ext)s', 'format': right.lstrip(),}
             #ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': 'worst',}
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])

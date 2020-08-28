@@ -2,6 +2,8 @@ from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtGui as qtg
 from PyQt5 import QtCore as qtc
 
+import datetime
+
 
 class View(qtw.QWidget):
 
@@ -19,15 +21,12 @@ class View(qtw.QWidget):
         download_button = qtw.QPushButton("Download", self)
         folder_button = qtw.QPushButton("...", self)
         folder_button.setMaximumWidth(60)
-        folder_button.setMaximumHeight(35)
+        folder_button.setMaximumHeight(30)
 
         #self.spin_box = qtw.QDial()
         self.combo_box = qtw.QComboBox()
-
         self.lable = qtw.QLabel()
-        self.time_lable = qtw.QLabel()
         self.progress = qtw.QProgressBar()
-        self.lcd2 = qtw.QLCDNumber()
         self.text = qtw.QTextBrowser()
 
         # Main UI layout
@@ -36,28 +35,30 @@ class View(qtw.QWidget):
 
         # Right col layout
         right_layout = qtw.QVBoxLayout()
-        layout.addLayout(right_layout, 2, 1)
+        layout.addLayout(right_layout, 0, 1)
+
+        # Left col layout
+        left_layout = qtw.QFormLayout()
+        layout.addLayout(left_layout, 0, 0)
         
+        left_layout.addRow("YouTube URL:", self.url)
+        left_layout.addRow("Download Options:", self.combo_box)
+        left_layout.addRow("Video Description:", self.text)
+        left_layout.addRow("Folder Location:", self.folder)
+
         # Adding widgets to the main UI
-        layout.addWidget(self.url, 0, 0)
-        layout.addWidget(download_button, 4, 1)
-        layout.addWidget(self.folder, 3, 0)
-        layout.addWidget(folder_button, 3, 1)
-        layout.addWidget(self.combo_box, 1, 0)
-        layout.addWidget(self.text, 2, 0)
-        layout.addWidget(self.lable, 0, 1)
-        layout.addWidget(self.progress, 4, 0)
+        layout.addWidget(download_button, 2, 1)
+        #layout.addWidget(self.folder, 1, 0)
+        #layout.addWidget(folder_button, 1, 1)
+        layout.addWidget(self.progress, 2, 0)
 
         # Adding widgets to the right col
-        right_layout.addWidget(self.lcd2)
-        right_layout.addWidget(self.time_lable)
-        self.lcd2.setMaximumHeight(50)
-        self.time_lable.setAlignment(qtc.Qt.AlignTop)
-        self.time_lable.setAlignment(qtc.Qt.AlignRight)
+        right_layout.addWidget(self.lable)
+        right_layout.addWidget(folder_button)
+        self.lable.setAlignment(qtc.Qt.AlignTop)
 
         # Setting lable text
         self.lable.setText("Status...")
-        self.time_lable.setText("minutes")
 
         # Connecting the download button and the URL change
         download_button.clicked.connect(self.download)
@@ -84,8 +85,9 @@ class View(qtw.QWidget):
     
     def show_preview(self, video_data):
         self.progress.reset()
-        self.lcd2.display(video_data["length"])
-        self.text.setText("Title: " + video_data["title"] + "\n\n" + "Description: " + video_data["description"])
+        time = datetime.timedelta(minutes= video_data["length"])
+        left, right = str(time).split('.')
+        self.text.setText("Length: " + left + "\n\n" + "Title: " + video_data["title"] + "\n\n" + "Description: " + video_data["description"])
         self.lable.setText(video_data["status"])
         self.combo_box.clear()
         self.combo_box.addItems(video_data["items"])
