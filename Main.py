@@ -37,5 +37,23 @@ if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
     # it's required to save a reference to MainWindow.
     # if it goes out of scope, it will be destroyed.
+
+    # Dark Theme
+    app.setStyle('Fusion')
+    palette = qtg.QPalette()
+    palette.setColor(qtg.QPalette.Window, qtg.QColor(53,53,53))
+    palette.setColor(qtg.QPalette.WindowText, qtc.Qt.white)
+    palette.setColor(qtg.QPalette.Base, qtg.QColor(15,15,15))
+    palette.setColor(qtg.QPalette.AlternateBase, qtg.QColor(53,53,53))
+    palette.setColor(qtg.QPalette.ToolTipBase, qtc.Qt.white)
+    palette.setColor(qtg.QPalette.ToolTipText, qtc.Qt.white)
+    palette.setColor(qtg.QPalette.Text, qtc.Qt.white)
+    palette.setColor(qtg.QPalette.Button, qtg.QColor(53,53,53))
+    palette.setColor(qtg.QPalette.ButtonText, qtc.Qt.white)
+    palette.setColor(qtg.QPalette.BrightText, qtc.Qt.red)
+    palette.setColor(qtg.QPalette.Highlight, qtg.QColor(142,45,197).lighter())
+    palette.setColor(qtg.QPalette.HighlightedText, qtc.Qt.black)
+    app.setPalette(palette)
+
     mw = MainWindow()
     sys.exit(app.exec())
