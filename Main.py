@@ -51,7 +51,7 @@ if __name__ == '__main__':
     palette.setColor(qtg.QPalette.Button, qtg.QColor(53,53,53))
     palette.setColor(qtg.QPalette.ButtonText, qtc.Qt.white)
     palette.setColor(qtg.QPalette.BrightText, qtc.Qt.red)
-    palette.setColor(qtg.QPalette.Highlight, qtg.QColor(142,45,197).lighter())
+    palette.setColor(qtg.QPalette.Highlight, qtg.QColor(45,100,197).lighter())
     palette.setColor(qtg.QPalette.HighlightedText, qtc.Qt.black)
     app.setPalette(palette)
 
