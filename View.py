@@ -86,7 +86,11 @@ class View(qtw.QWidget):
     def show_preview(self, video_data):
         self.progress.reset()
         time = datetime.timedelta(minutes= video_data["length"])
-        left, right = str(time).split('.')
+        print(time)
+        try:
+            left, right = str(time).split('.')
+        except:
+            left = str(time)
         self.text.setText("Length: " + left + "\n\n" + "Title: " + video_data["title"] + "\n\n" + "Description: " + video_data["description"])
         self.lable.setText(video_data["status"])
         self.combo_box.clear()
