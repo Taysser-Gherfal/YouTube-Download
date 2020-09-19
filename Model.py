@@ -5,6 +5,7 @@ from PyQt5 import QtGui as qtg
 from PyQt5 import QtCore as qtc
 from pytube import YouTube
 import youtube_dl
+#import mpv
 
 
 class Model(qtc.QObject):
@@ -92,4 +93,11 @@ class Model(qtc.QObject):
             #ydl_opts = {'progress_hooks': [self.my_hook], 'outtmpl': folder + '/' + '%(title)s', 'format': 'worst',}
             with youtube_dl.YoutubeDL(ydl_opts) as ydl:
                 ydl.download([url])
-            
+    
+    def play(self, url):
+        os.system("mpv "+url)
+        '''
+        player = mpv.MPV(ytdl=True)
+        player.play(url)
+        player.wait_for_playback()
+        '''

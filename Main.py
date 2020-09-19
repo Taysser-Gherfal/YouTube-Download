@@ -13,7 +13,7 @@ class MainWindow(qtw.QMainWindow):
         super().__init__()
         # Main UI code goes here
 
-        self.setWindowTitle("YouTube Downloader V1.4 - By Taysser")
+        self.setWindowTitle("YouTube Downloader V1.5 - By Taysser")
         self.resize(1000, 350)
 
         self.view = View()
@@ -28,6 +28,7 @@ class MainWindow(qtw.QMainWindow):
 
         self.view.pasted.connect(self.model.preview)
         self.view.submitted.connect(self.model.download)
+        self.view.play_url.connect(self.model.play)
 
         # End main UI code
         self.show()

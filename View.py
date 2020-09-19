@@ -9,6 +9,7 @@ class View(qtw.QWidget):
 
     pasted = qtc.pyqtSignal(str)
     submitted = qtc.pyqtSignal(str, str, str, int)
+    play_url = qtc.pyqtSignal(str)
 
     def __init__(self):
 
@@ -19,9 +20,12 @@ class View(qtw.QWidget):
         self.folder = qtw.QLineEdit()
         self.folder.setReadOnly(True)
         download_button = qtw.QPushButton("Download", self)
+        play_button = qtw.QPushButton("Play", self)
         folder_button = qtw.QPushButton("...", self)
         folder_button.setMaximumWidth(60)
         folder_button.setMaximumHeight(30)
+        play_button.setMaximumWidth(60)
+        play_button.setMaximumHeight(30)
 
         #self.spin_box = qtw.QDial()
         self.combo_box = qtw.QComboBox()
@@ -48,12 +52,11 @@ class View(qtw.QWidget):
 
         # Adding widgets to the main UI
         layout.addWidget(download_button, 2, 1)
-        #layout.addWidget(self.folder, 1, 0)
-        #layout.addWidget(folder_button, 1, 1)
         layout.addWidget(self.progress, 2, 0)
 
         # Adding widgets to the right col
         right_layout.addWidget(self.lable)
+        right_layout.addWidget(play_button)
         right_layout.addWidget(folder_button)
         self.lable.setAlignment(qtc.Qt.AlignTop)
 
@@ -64,6 +67,7 @@ class View(qtw.QWidget):
         download_button.clicked.connect(self.download)
         self.url.textChanged.connect(self.get_preview)
         folder_button.clicked.connect(self.openFolder)
+        play_button.clicked.connect(self.play)
 
     def openFolder(self):
         loc = qtw.QFileDialog.getExistingDirectory(self, "Select Directory")
@@ -75,6 +79,11 @@ class View(qtw.QWidget):
         library = self.lable.text()
         selected = self.combo_box.currentIndex()
         self.submitted.emit(url, folder, library, selected)
+    
+    def play(self):
+        url = self.url.text()
+        self.play_url.emit(url)
+
     
     def show_status(self, status):
         self.progress.setValue(status)
