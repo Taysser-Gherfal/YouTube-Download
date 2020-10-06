@@ -1,6 +1,7 @@
 from Model import *
 from View import *
 
+
 class MainWindow(qtw.QMainWindow):
 
     def __init__(self):
