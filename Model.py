@@ -40,7 +40,15 @@ class Model(qtc.QObject):
                     meta = ydl.extract_info(str(e), download=False)
                     
                     for i in meta['formats']:
-                        self.items.append("Type: " + i['acodec'] + " - " + i['format'] + " - " + i['ext'] + " - " + "Size: " + str(round(int(i['filesize']) / 1000000, 2)) + "MB" + " / " + i['format_id'])
+                        try:
+                            if i['filesize']:
+                                size = str(round(int(i['filesize']) / 1000000, 2))
+                            else:
+                                size = "Unknown!"
+                            self.items.append("Type: " + i['acodec'] + " - " + i['format'] + " - " + i['ext'] + " - " + "Size: " + size + "MB"  + " / " + i['format_id'])
+                            #self.items.append("Type: " + i['acodec'] + " - " + i['format'] + " - " + i['ext'] + " - " + "Size: " + str(round(int(i['filesize']) / 1000000, 2)) + "MB" + " / " + i['format_id'])
+                        except:
+                            continue
 
                     video_data = {
                         "title": meta['title'],
