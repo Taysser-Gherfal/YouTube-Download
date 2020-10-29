@@ -16,6 +16,8 @@ class MainWindow(qtw.QMainWindow):
         self.setWindowTitle("YouTube Downloader V1.5 - By Taysser")
         self.resize(1000, 350)
 
+
+
         self.view = View()
         self.setCentralWidget(self.view)
 
@@ -56,5 +58,8 @@ if __name__ == '__main__':
     palette.setColor(qtg.QPalette.HighlightedText, qtc.Qt.black)
     app.setPalette(palette)
 
+hjkjh
+hjkjh
+hjkjh
     mw = MainWindow()
     sys.exit(app.exec())
