@@ -14,7 +14,6 @@ class MainWindow(qtw.QMainWindow):
 
         self.setWindowTitle("YouTube Downloader V1.5 - By Taysser")
         self.resize(1000, 350)
-
         self.view = View()
         self.setCentralWidget(self.view)
 
