@@ -18,6 +18,7 @@ class MainWindow(qtw.QMainWindow):
 
 
 
+
         self.view = View()
         self.setCentralWidget(self.view)
 
